@@ -8,11 +8,17 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FCTextField(modifier: Modifier, value: String, onValueChange: (String) -> Unit){
+fun FCTextField(
+    modifier: Modifier,
+    value: String,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    onValueChange: (String) -> Unit
+) {
     TextField(
         modifier = modifier,
         value = value,
@@ -23,6 +29,7 @@ fun FCTextField(modifier: Modifier, value: String, onValueChange: (String) -> Un
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        visualTransformation = visualTransformation
     )
 }
