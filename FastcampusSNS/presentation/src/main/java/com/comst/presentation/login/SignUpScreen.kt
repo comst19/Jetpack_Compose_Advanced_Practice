@@ -16,13 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.comst.presentation.component.FCButton
 import com.comst.presentation.component.FCTextField
-import com.comst.presentation.ui.theme.FastcampusSNSTheme
+import com.comst.presentation.ui.theme.ConnectedTheme
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -165,7 +164,7 @@ private fun SignUpScreen(
 @Preview
 @Composable
 private fun SignUpScreenPreview() {
-    FastcampusSNSTheme {
+    ConnectedTheme {
         SignUpScreen(
             id = "테스트 아이디",
             username = "테스트 이름",

@@ -2,7 +2,6 @@ package com.comst.presentation.login
 
 import android.content.Intent
 import android.content.res.Configuration
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,10 +21,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.comst.presentation.MainActivity
+import com.comst.presentation.main.MainActivity
 import com.comst.presentation.component.FCButton
 import com.comst.presentation.component.FCTextField
-import com.comst.presentation.ui.theme.FastcampusSNSTheme
+import com.comst.presentation.ui.theme.ConnectedTheme
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -165,7 +164,7 @@ private fun LoginScreen(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun LoginScreenPreview() {
-    FastcampusSNSTheme {
+    ConnectedTheme {
         LoginScreen(id = "아이디",
             password = "비밀번호",
             onIdChange = {},

@@ -5,11 +5,13 @@ import com.comst.data.usecase.GetTokenUseCaseImpl
 import com.comst.data.usecase.LoginUseCaseImpl
 import com.comst.data.usecase.SetTokenUseCaseImpl
 import com.comst.data.usecase.SignUpUseCaseImpl
+import com.comst.data.usecase.main.setting.GetMyUserUseCaseImpl
 import com.comst.domain.usecase.login.ClearTokenUseCase
 import com.comst.domain.usecase.login.GetTokenUseCase
 import com.comst.domain.usecase.login.LoginUseCase
 import com.comst.domain.usecase.login.SetTokenUseCase
 import com.comst.domain.usecase.login.SignUpUseCase
+import com.comst.domain.usecase.main.setting.GetMyUserUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -33,4 +35,7 @@ abstract class UserModule {
 
     @Binds
     abstract fun bindClearTokenUseCase(uc: ClearTokenUseCaseImpl):ClearTokenUseCase
+
+    @Binds
+    abstract fun bindGetMyUserUseCase(uc: GetMyUserUseCaseImpl):GetMyUserUseCase
 }

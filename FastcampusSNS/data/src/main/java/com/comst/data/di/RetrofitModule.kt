@@ -1,5 +1,6 @@
 package com.comst.data.di
 
+import com.comst.data.retrofit.FCInterceptor
 import com.comst.data.retrofit.UserService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -18,9 +19,10 @@ val BASE_URL = "http://10.0.2.2:8080"
 class RetrofitModule {
 
     @Provides
-    fun providesOkHttpClient():OkHttpClient{
+    fun providesOkHttpClient(interceptor: FCInterceptor):OkHttpClient{
         return OkHttpClient
             .Builder()
+            .addInterceptor(interceptor)
             .build()
     }
 
