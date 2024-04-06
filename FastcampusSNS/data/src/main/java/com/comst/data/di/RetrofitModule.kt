@@ -1,6 +1,7 @@
 package com.comst.data.di
 
 import com.comst.data.retrofit.FCInterceptor
+import com.comst.data.retrofit.FileService
 import com.comst.data.retrofit.UserService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -14,6 +15,8 @@ import retrofit2.Retrofit
 import retrofit2.create
 
 val BASE_URL = "http://10.0.2.2:8080"
+//val BASE_URL = "http://10.254.0.235:8080"
+
 @Module
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
@@ -41,5 +44,10 @@ class RetrofitModule {
     @Provides
     fun provideUserService(retrofit: Retrofit):UserService{
         return retrofit.create(UserService::class.java)
+    }
+
+    @Provides
+    fun provideFileService(retrofit: Retrofit):FileService{
+        return retrofit.create(FileService::class.java)
     }
 }
