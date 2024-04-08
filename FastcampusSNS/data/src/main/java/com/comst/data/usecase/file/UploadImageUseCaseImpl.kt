@@ -11,10 +11,9 @@ import javax.inject.Inject
 
 class UploadImageUseCaseImpl @Inject constructor(
     private val fileService: FileService,
-    private val getInputStreamUseCase: GetInputStreamUseCase
+    private val getInputStreamUseCase: GetInputStreamUseCase,
 ) : UploadImageUseCase {
-
-    override suspend fun invoke(image: Image): Result<String> = kotlin.runCatching{
+    override suspend fun invoke(image: Image): Result<String> = kotlin.runCatching {
         val fileNamePart = MultipartBody.Part.createFormData(
             "fileName",
             image.name
@@ -32,7 +31,7 @@ class UploadImageUseCaseImpl @Inject constructor(
         )
         fileService.uploadFile(
             fileName = fileNamePart,
-            file = filePart
+            file = filePart,
         ).data.filePath
     }
 }

@@ -9,11 +9,11 @@ import javax.inject.Inject
 class SetMyUserUseCaseImpl @Inject constructor(
     private val userService: UserService,
     private val getMyUserUseCase: GetMyUserUseCase
-) : SetMyUserUseCase{
+) : SetMyUserUseCase {
     override suspend fun invoke(
         username: String?,
-        profileImageUrl:String?,
-    ): Result<Unit> = kotlin.runCatching {
+        profileImageUrl:String?
+    ): Result<Unit> = kotlin.runCatching{
         val user = getMyUserUseCase().getOrThrow()
         val requestBody = UpdateMyInfoParam(
             userName = username?:user.username,
@@ -22,5 +22,4 @@ class SetMyUserUseCaseImpl @Inject constructor(
         ).toRequestBody()
         userService.patchMyPage(requestBody)
     }
-
 }

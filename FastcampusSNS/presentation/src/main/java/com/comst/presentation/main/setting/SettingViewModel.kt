@@ -3,6 +3,7 @@ package com.comst.presentation.main.setting
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.comst.domain.model.User
 import com.comst.domain.usecase.login.ClearTokenUseCase
 import com.comst.domain.usecase.main.setting.GetMyUserUseCase
 import com.comst.domain.usecase.main.setting.SetProfileImageUseCase
@@ -25,16 +26,13 @@ class SettingViewModel @Inject constructor(
     private val setMyUserUseCase: SetMyUserUseCase,
     private val setProfileImageUseCase: SetProfileImageUseCase
 ) : ViewModel(), ContainerHost<SettingState, SettingSideEffect> {
-
     override val container: Container<SettingState, SettingSideEffect> =
         container(
             initialState = SettingState(),
             buildSettings = {
                 this.exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-                    intent {
-                        Log.d("SettingViewModel", throwable.message.orEmpty())
-                        postSideEffect(SettingSideEffect.Toast(throwable.message.orEmpty()))
-                    }
+                    Log.d("SettingViewModel", "${throwable.message.orEmpty()}")
+                    intent { postSideEffect(SettingSideEffect.Toast(throwable.message.orEmpty())) }
                 }
             }
         )
@@ -44,7 +42,7 @@ class SettingViewModel @Inject constructor(
     }
 
     private fun load() = intent {
-        val user = getMyUserUseCase().getOrThrow()
+        val user: User = getMyUserUseCase().getOrThrow()
         reduce {
             state.copy(
                 profileImageUrl = user.profileImageUrl,
@@ -58,13 +56,15 @@ class SettingViewModel @Inject constructor(
         postSideEffect(SettingSideEffect.NavigateToLoginActivity)
     }
 
-    fun onUsernameChange(username: String) = intent{
-        setMyUserUseCase(username = username).getOrThrow()
+    fun onUsernameChange(username: String) = intent {
+        setMyUserUseCase(username = username,).getOrThrow()
         load()
     }
 
     fun onImageChange(contentUri: Uri?) = intent {
-        setProfileImageUseCase(contentUri = contentUri.toString()).getOrThrow()
+        setProfileImageUseCase(
+            contentUri = contentUri.toString()
+        ).getOrThrow()
         load()
     }
 }
@@ -77,5 +77,6 @@ data class SettingState(
 
 sealed interface SettingSideEffect {
     class Toast(val message: String) : SettingSideEffect
+
     object NavigateToLoginActivity : SettingSideEffect
 }

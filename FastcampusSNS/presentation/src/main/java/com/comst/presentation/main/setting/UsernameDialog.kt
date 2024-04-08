@@ -30,20 +30,19 @@ fun UsernameDialog(
     onDismissRequest: () -> Unit
 ) {
     if (visible) {
-        var username by remember {
-            mutableStateOf(initialUsername)
-        }
-        Dialog(onDismissRequest = { /*TODO*/ }) {
+        var username by remember { mutableStateOf(initialUsername) }
+        Dialog(onDismissRequest = onDismissRequest) {
             Surface {
                 Column(modifier = Modifier.fillMaxWidth(0.8f)) {
-
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = username,
-                        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center, color = Color.Black),
+                        textStyle = LocalTextStyle.current.copy(
+                            textAlign = TextAlign.Center,
+                            color = Color.Black
+                        ),
                         onValueChange = { username = it }
                     )
-
                     Row {
                         TextButton(
                             modifier = Modifier.weight(1f),
@@ -65,7 +64,6 @@ fun UsernameDialog(
             }
         }
     }
-
 }
 
 @Preview
@@ -74,7 +72,7 @@ private fun UsernameDialogPreview() {
     ConnectedTheme {
         UsernameDialog(
             visible = true,
-            initialUsername = "charles",
+            initialUsername = "Charles",
             onUsernameChange = {},
             onDismissRequest = {}
         )

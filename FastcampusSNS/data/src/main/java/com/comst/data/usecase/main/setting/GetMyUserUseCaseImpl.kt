@@ -10,8 +10,7 @@ import javax.inject.Inject
 class GetMyUserUseCaseImpl @Inject constructor(
     private val userService: UserService
 ) : GetMyUserUseCase {
-
     override suspend fun invoke(): Result<User> = kotlin.runCatching {
-        userService.myPage().data.toDomainModel()
+        userService.getMyPage().data.toDomainModel()
     }
 }

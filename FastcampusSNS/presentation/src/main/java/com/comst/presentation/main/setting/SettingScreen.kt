@@ -42,15 +42,12 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun SettingScreen(viewModel:SettingViewModel = hiltViewModel()){
+fun SettingScreen(viewModel: SettingViewModel = hiltViewModel()) {
     val context = LocalContext.current
     val state = viewModel.collectAsState().value
-
-    var usernameDialogVisible by remember {
-        mutableStateOf(false)
-    }
+    var usernameDialogVisible by remember { mutableStateOf(false) }
     viewModel.collectSideEffect { sideEffect ->
-        when(sideEffect){
+        when (sideEffect) {
             is SettingSideEffect.Toast -> Toast.makeText(
                 context,
                 sideEffect.message,
@@ -58,9 +55,11 @@ fun SettingScreen(viewModel:SettingViewModel = hiltViewModel()){
             ).show()
 
             SettingSideEffect.NavigateToLoginActivity -> {
-                context.startActivity(Intent(context, LoginActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                })
+                context.startActivity(
+                    Intent(context, LoginActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                )
             }
         }
     }
@@ -83,6 +82,7 @@ fun SettingScreen(viewModel:SettingViewModel = hiltViewModel()){
         onNameChangeClick = { usernameDialogVisible = true },
         onLogoutClick = viewModel::onLogoutClick
     )
+
     UsernameDialog(
         visible = usernameDialogVisible,
         initialUsername = state.username,
@@ -93,10 +93,10 @@ fun SettingScreen(viewModel:SettingViewModel = hiltViewModel()){
 
 @Composable
 private fun SettingScreen(
-    username : String = "",
+    username: String = "",
     profileImageUrl: String?,
     onImageChangeClick: () -> Unit,
-    onNameChangeClick:() -> Unit,
+    onNameChangeClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
     Column(
@@ -107,8 +107,9 @@ private fun SettingScreen(
         Box {
             FCProfileImage(
                 modifier = Modifier.size(150.dp),
-                profileImageUrl = profileImageUrl
+                profileImageUrl = profileImageUrl,
             )
+
             IconButton(
                 modifier = Modifier.align(Alignment.BottomEnd),
                 onClick = onImageChangeClick
@@ -118,20 +119,18 @@ private fun SettingScreen(
                         .size(30.dp)
                         .border(width = 1.dp, color = Color.Gray, shape = CircleShape)
                         .background(color = Color.White, shape = CircleShape)
-                ){
+                ) {
                     Icon(
                         modifier = Modifier
                             .align(Alignment.Center)
                             .size(20.dp),
                         imageVector = Icons.Outlined.Settings,
-                        contentDescription = "프로필 수정",
+                        contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary
-
                     )
                 }
             }
         }
-
         Text(
             modifier = Modifier
                 .padding(top = 8.dp)
@@ -139,23 +138,22 @@ private fun SettingScreen(
             text = username,
             style = MaterialTheme.typography.headlineMedium
         )
-
         Button(
             modifier = Modifier.padding(top = 16.dp),
             onClick = onLogoutClick
         ) {
-            Text(text = "로그아웃")
+            Text("로그아웃")
         }
     }
 }
 
 @Preview
 @Composable
-private fun SettingScreenPreview(){
+private fun SettingScreenPreview() {
     ConnectedTheme {
         Surface {
             SettingScreen(
-                username = "MinSu",
+                username = "Charles",
                 profileImageUrl = null,
                 onImageChangeClick = {},
                 onNameChangeClick = {},
