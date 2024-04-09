@@ -13,7 +13,7 @@ class WritingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ConnectedTheme {
-                WritingNavHost()
+                WritingNavHost{ finish() }
             }
         }
     }
