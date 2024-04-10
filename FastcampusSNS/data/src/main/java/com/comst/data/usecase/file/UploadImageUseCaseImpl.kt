@@ -1,5 +1,6 @@
 package com.comst.data.usecase.file
 
+import com.comst.data.di.BASE_URL
 import com.comst.data.retrofit.FileService
 import com.comst.data.retrofit.UriRequestBody
 import com.comst.domain.model.Image
@@ -29,7 +30,7 @@ class UploadImageUseCaseImpl @Inject constructor(
             image.name,
             requestBody
         )
-        fileService.uploadFile(
+        BASE_URL + fileService.uploadFile(
             fileName = fileNamePart,
             file = filePart,
         ).data.filePath

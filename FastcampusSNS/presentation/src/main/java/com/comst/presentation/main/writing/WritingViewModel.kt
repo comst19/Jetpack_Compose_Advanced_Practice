@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import com.comst.domain.model.Image
 import com.comst.domain.usecase.main.writing.GetImageListUseCase
+import com.comst.domain.usecase.main.writing.PostBoardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import org.orbitmvi.orbit.Container
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WritingViewModel @Inject constructor(
-    private val getImageListUseCase: GetImageListUseCase
+    private val getImageListUseCase: GetImageListUseCase,
+    private val postBoardUseCase: PostBoardUseCase
 ) : ViewModel(),
     ContainerHost<WritingState, WritingSideEffect> {
     override val container: Container<WritingState, WritingSideEffect> = container(
@@ -65,7 +67,12 @@ class WritingViewModel @Inject constructor(
     }
 
     fun onPostClick() = intent {
-        val writingStage = state
+        postBoardUseCase(
+            title = "제목 없음",
+            content = state.text,
+            images = state.selectedImages
+        )
+        postSideEffect(WritingSideEffect.Finish)
     }
 }
 
@@ -79,4 +86,5 @@ data class WritingState(
 
 sealed interface WritingSideEffect {
     class Toast(val message: String) : WritingSideEffect
+    object Finish : WritingSideEffect
 }

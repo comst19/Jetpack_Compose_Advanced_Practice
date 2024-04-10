@@ -1,5 +1,6 @@
 package com.comst.data.di
 
+import com.comst.data.retrofit.BoardService
 import com.comst.data.retrofit.FCInterceptor
 import com.comst.data.retrofit.FileService
 import com.comst.data.retrofit.UserService
@@ -12,7 +13,6 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.create
 
 val BASE_URL = "http://10.0.2.2:8080"
 //val BASE_URL = "http://10.254.0.235:8080"
@@ -49,5 +49,10 @@ class RetrofitModule {
     @Provides
     fun provideFileService(retrofit: Retrofit):FileService{
         return retrofit.create(FileService::class.java)
+    }
+
+    @Provides
+    fun provideBoardService(retrofit: Retrofit): BoardService {
+        return retrofit.create(BoardService::class.java)
     }
 }

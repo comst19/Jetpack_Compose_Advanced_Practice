@@ -1,5 +1,6 @@
 package com.comst.data.retrofit
 
+import android.util.Log
 import com.comst.data.UserDataStore
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -11,6 +12,7 @@ class FCInterceptor @Inject constructor(
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val token:String? = runBlocking { userDataStore.getToken() }
+        Log.d("토큰",token.toString())
         return chain.proceed(
             chain.request()
                 .newBuilder()
