@@ -1,32 +1,54 @@
 package com.comst.presentation.main.board
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemKey
 import com.comst.presentation.model.main.board.BoardCardModel
 import com.comst.presentation.ui.theme.ConnectedTheme
-import kotlinx.coroutines.flow.emptyFlow
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun BoardScreen(
     viewModel: BoardViewModel = hiltViewModel()
 ) {
+
     val state = viewModel.collectAsState().value
+    var modelForDialog:BoardCardModel? by remember {
+        mutableStateOf(null)
+    }
+    val context = LocalContext.current
+    viewModel.collectSideEffect { sideEffect ->
+        when(sideEffect){
+            is BoardSideEffect.Toast -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     BoardScreen(
         boardCardModels = state.boardCardModelFlow.collectAsLazyPagingItems(),
-        onOptionClick = {},
+        onOptionClick = {
+                      modelForDialog = it
+        },
         onReplyClick = {}
+    )
+
+    BoardOptionDialog(
+        model = modelForDialog,
+        onDismissRequest = { modelForDialog = null },
+        onBoardDelete = viewModel::onBoardDelete
     )
 }
 
