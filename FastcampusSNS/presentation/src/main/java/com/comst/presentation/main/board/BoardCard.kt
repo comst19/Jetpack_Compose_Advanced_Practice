@@ -1,7 +1,9 @@
 package com.comst.presentation.main.board
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -49,8 +51,11 @@ fun BoardCard(
             )
             // 이미지 페이저
             if (images.isNotEmpty()){
+                Log.d("이미지","$images")
                 FCImagePager(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
                     images = images
                 )
             }

@@ -16,11 +16,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.comst.presentation.R
 import com.comst.presentation.main.board.BoardScreen
+import com.comst.presentation.main.board.BoardViewModel
 import com.comst.presentation.main.setting.SettingScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainNavHost() {
+fun MainNavHost(boardViewModel: BoardViewModel) {
     val navController = rememberNavController()
     Surface {
         Scaffold(
@@ -39,7 +40,7 @@ fun MainNavHost() {
                     startDestination = MainRoute.BOARD.route
                 ){
                     composable(route = MainRoute.BOARD.route){
-                        BoardScreen()
+                        BoardScreen(viewModel = boardViewModel)
                     }
 
                     composable(route = MainRoute.SETTING.route){

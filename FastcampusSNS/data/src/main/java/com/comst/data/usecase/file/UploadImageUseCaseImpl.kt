@@ -30,7 +30,7 @@ class UploadImageUseCaseImpl @Inject constructor(
             image.name,
             requestBody
         )
-        BASE_URL + fileService.uploadFile(
+        BASE_URL+fileService.uploadFile(
             fileName = fileNamePart,
             file = filePart,
         ).data.filePath

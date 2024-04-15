@@ -23,7 +23,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun BoardScreen(
-    viewModel: BoardViewModel = hiltViewModel()
+    viewModel: BoardViewModel
 ) {
 
     val state = viewModel.collectAsState().value
@@ -39,6 +39,7 @@ fun BoardScreen(
 
     BoardScreen(
         boardCardModels = state.boardCardModelFlow.collectAsLazyPagingItems(),
+        deletedBoardIds = state.deletedBoardIds,
         onOptionClick = {
                       modelForDialog = it
         },
@@ -55,6 +56,7 @@ fun BoardScreen(
 @Composable
 private fun BoardScreen(
     boardCardModels: LazyPagingItems<BoardCardModel>,
+    deletedBoardIds:Set<Long> = emptySet(),
     onOptionClick: (BoardCardModel) -> Unit,
     onReplyClick: (BoardCardModel) -> Unit
 ) {
@@ -67,13 +69,16 @@ private fun BoardScreen(
                 key = { index -> boardCardModels[index]?.boardId ?: index}
             ) { index ->
                 boardCardModels[index]?.run{
-                    BoardCard(
-                        username = this.username,
-                        images = this.images,
-                        text = this.text,
-                        onOptionClick = { onOptionClick(this) },
-                        onReplyClick = { onReplyClick(this) }
-                    )
+                    if (!deletedBoardIds.contains(this.boardId)){
+                        BoardCard(
+                            username = this.username,
+                            images = this.images,
+                            text = this.text,
+                            onOptionClick = { onOptionClick(this) },
+                            onReplyClick = { onReplyClick(this) }
+                        )
+                    }
+
                 }
             }
 
