@@ -1,12 +1,9 @@
 package com.comst.presentation.main.board
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.comst.domain.model.ACTION_POSTED
+import com.comst.domain.model.Comment
 import com.comst.domain.usecase.main.board.DeleteBoardUseCase
 import com.comst.domain.usecase.main.board.GetBoardsUseCase
 import com.comst.presentation.model.main.board.BoardCardModel
@@ -59,13 +56,17 @@ class BoardViewModel @Inject constructor(
         }
     }
 
-    fun onBoardDelete(model:BoardCardModel) = intent {
+    fun onDeleteBoard(model:BoardCardModel) = intent {
         deleteBoardUseCase(model.boardId).getOrThrow()
         reduce {
             state.copy(
                 deletedBoardIds = state.deletedBoardIds + model.boardId
             )
         }
+    }
+
+    fun onDeleteComment(comment: Comment) = intent {
+
     }
 
 }
