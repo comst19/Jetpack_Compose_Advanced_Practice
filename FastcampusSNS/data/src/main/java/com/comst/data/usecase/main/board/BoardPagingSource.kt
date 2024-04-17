@@ -1,4 +1,4 @@
-package com.comst.data.usecase.board
+package com.comst.data.usecase.main.board
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

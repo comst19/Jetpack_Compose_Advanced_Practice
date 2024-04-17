@@ -3,6 +3,7 @@ package com.comst.presentation.main.board
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -27,23 +28,31 @@ fun BoardScreen(
 ) {
 
     val state = viewModel.collectAsState().value
-    var modelForDialog:BoardCardModel? by remember {
+    var modelForDialog: BoardCardModel? by remember {
         mutableStateOf(null)
     }
     val context = LocalContext.current
     viewModel.collectSideEffect { sideEffect ->
-        when(sideEffect){
-            is BoardSideEffect.Toast -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
+        when (sideEffect) {
+            is BoardSideEffect.Toast -> Toast.makeText(
+                context,
+                sideEffect.message,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     BoardScreen(
+        myUserId = state.myUserId,
         boardCardModels = state.boardCardModelFlow.collectAsLazyPagingItems(),
         deletedBoardIds = state.deletedBoardIds,
         onOptionClick = {
             modelForDialog = it
         },
-        onDeleteComment = viewModel::onDeleteComment
+        onPostComment = viewModel::onPostComment,
+        addedComments = state.addedComments,
+        deletedComments = state.deletedComments,
+        onDeleteComment = viewModel::onDeleteComment,
     )
 
     BoardOptionDialog(
@@ -55,28 +64,39 @@ fun BoardScreen(
 
 @Composable
 private fun BoardScreen(
+    myUserId:Long,
     boardCardModels: LazyPagingItems<BoardCardModel>,
-    deletedBoardIds:Set<Long> = emptySet(),
+    deletedBoardIds: Set<Long> = emptySet(),
     onOptionClick: (BoardCardModel) -> Unit,
-    onDeleteComment:(Comment) -> Unit
+    onPostComment: (Long, String) -> Unit,
+    addedComments: Map<Long, List<Comment>>,
+    deletedComments: Map<Long, List<Comment>>,
+    onDeleteComment: (Long, Comment) -> Unit,
 ) {
     Surface {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .imePadding(),
         ) {
             items(
                 count = boardCardModels.itemCount,
-                key = { index -> boardCardModels[index]?.boardId ?: index}
+                key = { index -> boardCardModels[index]?.boardId ?: index }
             ) { index ->
-                boardCardModels[index]?.run{
-                    if (!deletedBoardIds.contains(this.boardId)){
+                boardCardModels[index]?.run {
+                    val model = this
+                    if (!deletedBoardIds.contains(this.boardId)) {
                         BoardCard(
-                            username = this.username,
-                            images = this.images,
-                            text = this.text,
-                            comments = this.comments,
-                            onOptionClick = { onOptionClick(this) },
-                            onDeleteComment = onDeleteComment
+                            isMine = myUserId == model.userId,
+                            myUserId = myUserId,
+                            boardId = model.boardId,
+                            username = model.username,
+                            images = model.images,
+                            text = model.text,
+                            comments = model.comments + addedComments[boardId].orEmpty() - deletedComments[boardId].orEmpty(),
+                            onOptionClick = { onOptionClick(model) },
+                            onDeleteComment = onDeleteComment,
+                            onPostComment = onPostComment
                         )
                     }
 

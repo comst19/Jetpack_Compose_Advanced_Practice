@@ -28,13 +28,17 @@ import com.comst.presentation.ui.theme.ConnectedTheme
 
 @Composable
 fun BoardCard(
+    boardId: Long,
+    isMine:Boolean,
+    myUserId:Long,
     profileImageUrl: String? = null,
     username: String,
-    images:List<String>,
-    text : String,
-    comments:List<Comment>,
+    images: List<String>,
+    text: String,
+    comments: List<Comment>,
     onOptionClick: () -> Unit,
-    onDeleteComment:(Comment)->Unit
+    onDeleteComment: (Long, Comment) -> Unit,
+    onPostComment: (Long, String) -> Unit
 ) {
 
     var commentDialogVisible by remember {
@@ -53,14 +57,15 @@ fun BoardCard(
         ) {
             // 헤더
             BoardHeader(
+                isMine = isMine,
                 modifier = Modifier.fillMaxWidth(),
                 profileImageUrl = profileImageUrl,
                 username = username,
                 onOptionClick = onOptionClick
             )
             // 이미지 페이저
-            if (images.isNotEmpty()){
-                Log.d("이미지","$images")
+            if (images.isNotEmpty()) {
+                Log.d("이미지", "$images")
                 FCImagePager(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -83,10 +88,10 @@ fun BoardCard(
                     showMore = textLayoutResult.didOverflowHeight
                 }
             )
-            if (showMore){
+            if (showMore) {
                 TextButton(
                     onClick = {
-                    maxLines = Integer.MAX_VALUE
+                        maxLines = Integer.MAX_VALUE
                     }
                 ) {
                     Text(
@@ -106,18 +111,24 @@ fun BoardCard(
                     commentDialogVisible = true
                 }
             ) {
-                Text(text = "댓글")
+                Text(text = "${comments.size} 댓글")
             }
         }
     }
 
     CommentDialog(
         visible = commentDialogVisible,
+        myUserId = myUserId,
         onDismissRequest = { commentDialogVisible = false },
         comments = comments,
-        onDeleteComment = onDeleteComment,
+        onDeleteComment = { comment ->
+            onDeleteComment(boardId, comment)
+        },
         onCloseClick = {
             commentDialogVisible = false
+        },
+        onPostComment = { text ->
+            onPostComment(boardId, text)
         }
     )
 }
@@ -127,13 +138,21 @@ fun BoardCard(
 private fun BoardCardPreview() {
     ConnectedTheme {
         BoardCard(
+            isMine = false,
+            myUserId = -1L,
+            boardId = -1L,
             profileImageUrl = null,
             username = "Federico William",
             images = emptyList(),
             text = "내용\nff\ndd\ndd",
             onOptionClick = {},
             comments = emptyList(),
-            onDeleteComment = {}
+            onDeleteComment = { commentId, comment ->
+
+            },
+            onPostComment = { boardId, text ->
+
+            }
         )
     }
 }

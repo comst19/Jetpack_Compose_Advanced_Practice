@@ -16,6 +16,7 @@ data class CommentDTO(
 fun CommentDTO.toDomainModel(): Comment{
     return Comment(
         id = id,
+        userId = createUserId,
         text = comment,
         username = createUserName,
         profileImageUrl = profileImageUrl

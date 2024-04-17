@@ -1,4 +1,4 @@
-package com.comst.data.usecase.board
+package com.comst.data.usecase.main.board
 
 import com.comst.data.retrofit.BoardService
 import com.comst.domain.usecase.main.board.DeleteBoardUseCase

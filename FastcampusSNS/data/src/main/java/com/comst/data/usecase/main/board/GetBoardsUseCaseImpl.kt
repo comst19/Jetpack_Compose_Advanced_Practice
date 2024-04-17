@@ -1,4 +1,4 @@
-package com.comst.data.usecase.board
+package com.comst.data.usecase.main.board
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -11,10 +11,10 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class GetBoardsUseCaseImpl @Inject constructor(
-    private val pagingSource:Provider<BoardPagingSource>
-) : GetBoardsUseCase{
+    private val pagingSource: Provider<BoardPagingSource>
+) : GetBoardsUseCase {
     override suspend fun invoke(): Result<Flow<PagingData<Board>>> = kotlin.runCatching {
-         Pager(
+        Pager(
             config = PagingConfig(
                 pageSize = 10,
                 initialLoadSize = 10

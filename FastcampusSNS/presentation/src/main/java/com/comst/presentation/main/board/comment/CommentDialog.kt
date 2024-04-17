@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -27,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -39,10 +36,11 @@ import com.comst.presentation.ui.theme.ConnectedTheme
 @Composable
 fun CommentDialog(
     visible: Boolean,
+    myUserId: Long,
     comments: List<Comment>,
     onDismissRequest: () -> Unit,
     onCloseClick: () -> Unit = {},
-    onSendClick: () -> Unit = {},
+    onPostComment: (String) -> Unit,
     onDeleteComment: (Comment) -> Unit = {}
 ) {
 
@@ -90,11 +88,13 @@ fun CommentDialog(
 
                                 CommentCard(
                                     modifier = Modifier,
+                                    isMine = myUserId == comment.userId,
                                     profileImageUrl = comment.profileImageUrl,
                                     username = comment.username,
                                     text = comment.text,
                                     onDeleteComment = {
                                         onDeleteComment(comment)
+                                        text = ""
                                     }
                                 )
                             }
@@ -110,7 +110,7 @@ fun CommentDialog(
                                 value = text,
                                 onValueChange = { text = it }
                             )
-                            IconButton(onClick = onSendClick) {
+                            IconButton(onClick = { onPostComment(text) }) {
                                 Icon(
                                     imageVector = Icons.Filled.Send,
                                     contentDescription = "전송"
@@ -132,10 +132,12 @@ private fun CommentDialogPreview() {
     ConnectedTheme {
         CommentDialog(
             visible = true,
+            myUserId = -1L,
             comments = emptyList(),
             onDismissRequest = {},
             onCloseClick = {},
-            onSendClick = {},
+            onPostComment = {},
+            onDeleteComment = { },
         )
     }
 }

@@ -22,6 +22,7 @@ import com.comst.presentation.ui.theme.ConnectedTheme
 @Composable
 fun BoardHeader (
     modifier: Modifier = Modifier,
+    isMine: Boolean,
     profileImageUrl:String? = null,
     username:String,
     onOptionClick:()->Unit
@@ -45,12 +46,14 @@ fun BoardHeader (
             style = MaterialTheme.typography.titleMedium
         )
         // 옵션 버튼
-        Spacer(modifier = modifier.weight(1f))
-        IconButton(onClick = onOptionClick) {
-            Icon(
-                imageVector = Icons.Filled.MoreVert,
-                contentDescription = "옵션"
-            )
+        if (isMine){
+            Spacer(modifier = modifier.weight(1f))
+            IconButton(onClick = onOptionClick) {
+                Icon(
+                    imageVector = Icons.Filled.MoreVert,
+                    contentDescription = "옵션"
+                )
+            }
         }
     }
 }
@@ -63,6 +66,7 @@ private fun BoardHeaderPreview () {
         Surface {
             BoardHeader(
                 profileImageUrl = null,
+                isMine = true,
                 username = "Heriberto Adkins",
                 onOptionClick = {}
             )
