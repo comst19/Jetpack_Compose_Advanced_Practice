@@ -82,4 +82,7 @@ dependencies {
 
     // paging3
     implementation(libs.paging.compose)
+
+    // rich compose editor
+    implementation("com.mohamedrejeb.richeditor:richeditor-compose:1.0.0-rc04")
 }

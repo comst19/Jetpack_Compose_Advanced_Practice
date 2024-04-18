@@ -6,7 +6,8 @@
 
         <activity android:name=".main.MainActivity" />
 
-        <activity android:name=".main.writing.WritingActivity"/>
+        <activity android:name=".main.writing.WritingActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".SplashActivity"
             android:exported="true">
