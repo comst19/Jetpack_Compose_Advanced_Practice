@@ -51,15 +51,19 @@ class BoardViewModel @Inject constructor(
 
 
     fun load() = intent {
-        val myUser = getMyUserUseCase().getOrThrow()
         val  boardFlow = getBoardsUseCase().getOrThrow()
         val boardCardModelFlow = boardFlow.map { pagingData ->
             pagingData.map { board -> board.toUIModel() }
         }
         reduce {
             state.copy(
-                myUserId = myUser.id,
                 boardCardModelFlow = boardCardModelFlow
+            )
+        }
+        val myUser = getMyUserUseCase().getOrThrow()
+        reduce {
+            state.copy(
+                myUserId = myUser.id
             )
         }
     }
