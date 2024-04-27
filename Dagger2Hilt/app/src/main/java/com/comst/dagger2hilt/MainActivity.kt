@@ -12,18 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.comst.dagger2hilt.ui.theme.Dagger2HiltTheme
-import dagger.android.AndroidInjection
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var str:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-
 
         Log.e("MainActivity", "str " + str)
 
