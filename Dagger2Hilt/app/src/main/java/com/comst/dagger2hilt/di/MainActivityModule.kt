@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class MainActivityNodule {
+class MainActivityModule {
 
     @Provides
     @ActivityScope

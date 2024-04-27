@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.comst.dagger2hilt.ui.theme.Dagger2HiltTheme
+import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
@@ -20,19 +21,10 @@ class MainActivity : ComponentActivity() {
     lateinit var str:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        val appComponent = (application as MyApplication)
-            .appComponent
 
-        val mainSubcomponent = appComponent
-            .mainSubcomponentFactory()
-            .create(this)
-
-//        appComponent.inject(this)
-        mainSubcomponent.inject(this)
-        Log.e("MainActivity", "app "+appComponent.application().toString())
-        Log.e("MainActivity", "string " + appComponent.helloWorld())
         Log.e("MainActivity", "str " + str)
 
         setContent {
