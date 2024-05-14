@@ -20,11 +20,12 @@ import com.example.android.dagger.storage.SharedPreferencesStorage
 import com.example.android.dagger.storage.Storage
 import dagger.Binds
 import dagger.Module
-import dagger.hilt.migration.DisableInstallInCheck
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
+@InstallIn(SingletonComponent::class)
 // Tells Dagger this is a Dagger module
 @Module
-@DisableInstallInCheck
 abstract class StorageModule {
 
     // Makes Dagger provide SharedPreferencesStorage when a Storage type is requested
