@@ -72,4 +72,8 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.paging)
     kapt(libs.room.compiler)
+
+    // test coroutines
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+    androidTestImplementation("androidx.test:runner:1.5.2")
 }

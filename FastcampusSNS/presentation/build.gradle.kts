@@ -85,4 +85,7 @@ dependencies {
 
     // rich compose editor
     implementation("com.mohamedrejeb.richeditor:richeditor-compose:1.0.0-rc04")
+
+    // test coroutines
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
 }
