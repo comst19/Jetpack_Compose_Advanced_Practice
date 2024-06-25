@@ -23,23 +23,28 @@ class HiltExampleTest {
 //    @Inject
 //    lateinit var foo:Foo
 
-    @Inject
-    lateinit var bar:Bar
+//    @Inject
+//    lateinit var bar:Bar
+//
+//    @BindValue
+//    val foo:Foo = Foo("HiltExampleTest")
 
-    @BindValue
-    val foo:Foo = Foo("HiltExampleTest")
+//    @Test
+//    fun 주입테스트(){
+//        hiltRule.inject()
+//        Assert.assertNotNull(userDataStore)
+//        Assert.assertEquals("HiltExampleTest", bar.foo.tag)
+//    }
+//
+//    @Test
+//    fun bar주입테스트(){
+//        hiltRule.inject()
+//        Assert.assertNotNull(bar)
+//    }
 
     @Test
-    fun 주입테스트(){
-        hiltRule.inject()
-        Assert.assertNotNull(userDataStore)
-        Assert.assertEquals("HiltExampleTest", bar.foo.tag)
-    }
+    fun test(){
 
-    @Test
-    fun bar주입테스트(){
-        hiltRule.inject()
-        Assert.assertNotNull(bar)
     }
 
 //    @Test

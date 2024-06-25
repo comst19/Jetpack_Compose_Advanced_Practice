@@ -1,10 +1,10 @@
 package com.comst.fastcampussns
 
-import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
+import dagger.hilt.android.EarlyEntryPoint
 import dagger.hilt.components.SingletonComponent
 
-@EntryPoint
+@EarlyEntryPoint
 @InstallIn(SingletonComponent::class)
 interface FooEntryPoint {
     fun foo():Foo
