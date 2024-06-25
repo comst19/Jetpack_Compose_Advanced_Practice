@@ -10,10 +10,10 @@ import javax.inject.Inject
 @InstallIn(SingletonComponent::class)
 class FooModule {
 
-//    @Provides
-//    fun provideFoo():Foo{
-//        return Foo("FooModule")
-//    }
+    @Provides
+    fun provideFoo():Foo{
+        return Foo("FooModule")
+    }
 }
 
 class Foo(val tag:String)
