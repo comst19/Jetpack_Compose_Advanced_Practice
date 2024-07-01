@@ -76,4 +76,9 @@ dependencies {
     // test coroutines
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
     androidTestImplementation("androidx.test:runner:1.5.2")
+
+    // hilt + work
+    implementation("androidx.work:work-runtime:2.9.0")
+    implementation("androidx.hilt:hilt-work:1.2.0")
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
 }
