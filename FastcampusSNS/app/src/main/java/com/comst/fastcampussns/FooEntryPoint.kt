@@ -1,5 +1,6 @@
 package com.comst.fastcampussns
 
+import com.comst.data.UserDataStore
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EarlyEntryPoint
 import dagger.hilt.components.SingletonComponent
@@ -8,4 +9,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface FooEntryPoint {
     fun foo():Foo
+    fun userDataStore():UserDataStore
 }

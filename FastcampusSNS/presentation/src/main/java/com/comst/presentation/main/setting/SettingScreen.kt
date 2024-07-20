@@ -144,6 +144,21 @@ private fun SettingScreen(
         ) {
             Text("로그아웃")
         }
+
+        val context = LocalContext.current
+        Button(
+            modifier = Modifier.padding(top = 16.dp),
+            onClick = {
+                context.startActivity(
+                    Intent(
+                        context,
+                        Class.forName("com.comst.dynamicfeature.DynamicFeatureActivity")
+                    )
+                )
+            }
+        ) {
+            Text("Dynamic Feature")
+        }
     }
 }
 
